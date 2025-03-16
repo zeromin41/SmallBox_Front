@@ -1,0 +1,215 @@
+/* 공용 배경색 스타일 */
+.bg-purple {
+    background-color: rgb(53, 2, 53) !important;
+}
+
+.ranking-badge {
+    position: absolute;
+    left: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 2vw;
+    padding: 5px 10px;
+}
+
+.movie-container {
+    position: relative;
+    cursor: pointer; /*클릭 가능한 요소로 변경 */
+}
+
+.movie-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    padding: 10px;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+.movie-overlay p {
+    display: -webkit-box; /* Flexbox 형태로 표시 */
+    -webkit-line-clamp: 3; /* 최대 3줄로 제한 */
+    -webkit-box-orient: vertical; /* 세로 방향으로 박스 정렬 */
+    overflow: hidden; /* 넘치는 부분 숨김 */
+    text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 처리 */
+    white-space: normal; /* 텍스트가 자동으로 줄바꿈되도록 설정 */
+}
+
+
+.movie-container:hover .movie-overlay {
+    opacity: 1;
+}
+
+/* 배너를 감싸는 컨테이너 스타일 */
+.banner-container {
+    width: 100%; /* 전체 너비 차지 */
+    max-height: 300px;
+    height: 10%; /* 배너 높이 */
+    background-color: rgba(33, 5, 118, 0.371); /* 양옆을 보라색으로 설정 */
+    display: flex;
+    justify-content: center; /* 배너를 가로 가운데 정렬 */
+    align-items: center; /* 세로 정렬 */
+}
+
+/* 배너 자체 스타일 */
+#banner {
+    width: 50%; /* 배너 크기를 현재의 절반으로 설정 */
+    height: 100%; /* 부모 요소의 높이를 그대로 유지 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* 배너 이미지 스타일 */
+#banner img {
+    width: 100%; /* 가로 크기 자동 */
+    height: 100%; /* 배너 높이에 맞추기 */
+    object-fit: contain; /* 이미지가 배너를 초과하지 않도록 설정 */
+}
+
+
+
+/* 좌석 */
+.seat {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    border-radius: 3px;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.seat:hover {
+    background-color: #e9ecef;
+}
+
+.seat.selected {
+    background-color: #009688;
+    color: white;
+}
+
+.seat.occupied {
+    background-color: #dc3545;
+    color: white;
+    cursor: not-allowed;
+}
+
+/* 스크린 */
+.screen {
+    background-color: #e0e0e0;
+    height: 30px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    margin-bottom: 30px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.screen::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(to bottom, rgba(224, 224, 224, 0.5), transparent);
+}
+
+/* 예매 단계 */
+.booking-step {
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+/* 캘린더 */
+.calendar-container {
+    height: 400px;
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* 시간 슬롯 */
+.time-slot {
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.time-slot:hover {
+    background-color: #e9ecef;
+}
+
+.time-slot.selected {
+    background-color: #009688;
+    color: white;
+}
+
+/* 예매 컨테이너 */
+.booking-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgb(53, 2, 53);
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* 예매 요약 */
+.booking-summary {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 30px;
+}
+
+/* 극장 버튼 */
+.theater-btn {
+    transition: all 0.3s ease;
+}
+
+.theater-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* 예매 확정 버튼 */
+#confirm-booking {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+#confirm-booking:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
