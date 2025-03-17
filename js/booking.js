@@ -10,34 +10,21 @@ const bookingInfo = {
     theater: null,
     date: null,
     time: null,
-    seats: [],
-    totalPrice: 0
+    seats: []
 };
 
-// DB에서 시간표 및 좌석 정보를 가져올 예정 (추후 백엔드 연동)
-async function fetchTimeSlots(theater, date) {
-    // const response = await fetch(`/api/timeslots?theater=${theater}&date=${date}`);
-    // return await response.json();
-
-    // 임시 데이터
-    return ["10:30", "13:00", "15:30", "18:00", "20:30", "23:00"];
+// FullCalendar 날짜 포맷 변환 함수
+function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 }
 
-// DB에서 좌석 정보를 가져올 예정 (추후 백엔드 연동)
-async function fetchSeats(theater, date, time) {
-    // const response = await fetch(`/api/seats?theater=${theater}&date=${date}&time=${time}`);
-    // return await response.json();
-
-    // 임시 데이터
-    return ["A3", "A4", "B5"]; // 이미 예약된 좌석
-}
-
-// 자동 스크롤 기능 추가
+// 자동 스크롤 기능
 function scrollToSection(sectionId) {
     document.getElementById(sectionId).scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-// 영화 상세 정보 가져오기
+// 영화 정보 가져오기
 async function fetchMovieDetail() {
     const movieId = getMovieIdFromUrl();
     if (!movieId) {
@@ -65,7 +52,6 @@ async function fetchMovieDetail() {
         `;
     } catch (error) {
         console.error("영화 정보를 가져오는 중 오류 발생:", error);
-        document.getElementById("movie-title").textContent = "영화 정보를 불러오는 데 실패했습니다.";
     }
 }
 
@@ -86,12 +72,13 @@ function setupTheaterButtons() {
     });
 }
 
-// 주간 달력 (풀캘린더)
+// FullCalendar 초기화
 function initCalendar() {
     const calendarEl = document.getElementById('calendar');
-    
+    calendarEl.innerHTML = '';  // 기존 캘린더 초기화
+
     const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridWeek', // 이번 주만 보이게 변경
+        initialView: 'dayGridWeek',
         selectable: true,
         locale: 'ko',
         headerToolbar: {
@@ -105,17 +92,22 @@ function initCalendar() {
         select: function(info) {
             bookingInfo.date = info.startStr;
             document.getElementById("summary-date").textContent = formatDate(info.startStr);
-            
+
             document.getElementById('step3').style.display = 'block';
             scrollToSection('step3');
             setupTimeSlots();
         }
     });
-    
+
     calendar.render();
 }
 
-// 시간 선택 (DB 연동 필요)
+// 상영 시간표 가져오기 (임시 데이터)
+async function fetchTimeSlots(theater, date) {
+    return ["10:30", "13:00", "15:30", "18:00", "20:30", "23:00"];
+}
+
+// 상영 시간 선택
 async function setupTimeSlots() {
     const timeSlotContainer = document.getElementById('time-slots');
     timeSlotContainer.innerHTML = '';
@@ -131,10 +123,10 @@ async function setupTimeSlots() {
         slot.addEventListener('click', function() {
             document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
             this.classList.add('selected');
-            
+
             bookingInfo.time = this.dataset.time;
             document.getElementById("summary-time").textContent = bookingInfo.time;
-            
+
             document.getElementById('step4').style.display = 'block';
             scrollToSection('step4');
             generateSeats();
@@ -144,7 +136,12 @@ async function setupTimeSlots() {
     });
 }
 
-// 좌석 생성 (DB 연동 필요)
+// 예매된 좌석 가져오기 (임시 데이터)
+async function fetchSeats(theater, date, time) {
+    return ["A3", "A4", "B5"];
+}
+
+// 좌석 생성
 async function generateSeats() {
     const seatsContainer = document.getElementById('seats-container');
     seatsContainer.innerHTML = '';
@@ -162,7 +159,7 @@ async function generateSeats() {
             const seatNumber = `${row}${i}`;
             const seat = document.createElement('div');
             seat.className = 'seat';
-            seat.textContent = i;
+            seat.textContent = `${row}${i}`;
             seat.dataset.seat = seatNumber;
 
             if (bookedSeats.includes(seatNumber)) {
@@ -187,19 +184,18 @@ async function generateSeats() {
 function updateSelectedSeats() {
     const selectedSeats = document.querySelectorAll('.seat.selected');
     bookingInfo.seats = Array.from(selectedSeats).map(seat => seat.dataset.seat);
-    bookingInfo.totalPrice = bookingInfo.seats.length * 12000;
 
     document.getElementById('summary-seats').textContent = bookingInfo.seats.join(', ') || '선택된 좌석 없음';
-    document.getElementById('summary-price').textContent = bookingInfo.totalPrice.toLocaleString() + '원';
 }
 
-// 예매 확인 버튼
+// 예매 확정 버튼
 function setupConfirmButton() {
     document.getElementById('confirm-booking').addEventListener('click', function() {
         if (bookingInfo.seats.length === 0) {
             alert('좌석을 선택해주세요.');
             return;
         }
+
         alert('예매가 완료되었습니다.');
         window.location.href = 'index.html';
     });
