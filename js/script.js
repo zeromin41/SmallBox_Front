@@ -48,7 +48,7 @@ function displayMovies(movies) {
             <p class="card-text text-white">좋아요: ${movie.vote_count}</p>
         </div>
         <div class="card-footer bg-dark">
-            <a href="booking.html?id=${movie.id}" class="btn btn-secondary">예매</a>
+        <a href="booking.html?id=${movie.id}" class="btn btn-secondary booking-btn">예매</a>
         </div>`;
         
         movieList.appendChild(movieCard);

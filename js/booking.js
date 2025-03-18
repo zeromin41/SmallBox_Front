@@ -146,18 +146,28 @@ async function setupTimeSlots() {
     });
 }
 
-// 예매된 좌석 가져오기
+// 예매된 좌석 가져오기 : Post로 바꿨슴당
 async function fetchSeats(theater, date, time) {
-    // 백엔드에서 이미 예매된 좌석 정보를 가져오는 로직
-    // 필요시 백엔드 API를 추가로 개발해야 함
+    const scheduleTime = `${date} ${time}`;
+
     try {
-        const scheduleTime = `${date} ${time}`;
-        const response = await fetch(`${BACKEND_URL}/bookedSeats?theaterName=${encodeURIComponent(theater)}&scheduleTime=${encodeURIComponent(scheduleTime)}`);
+        const response = await fetch(`${BACKEND_URL}/bookedSeats`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                theaterName: theater,
+                scheduleTime: scheduleTime
+            })
+        });
+
         if (!response.ok) {
-            return []; // 오류 발생 시 빈 배열 반환
+            throw new Error("서버 응답 실패");
         }
-        const bookedSeats = await response.json();
-        return bookedSeats; // 예매된 좌석 배열 반환
+
+        const data = await response.json();
+        return data.bookedSeats; // 예약된 좌석 배열 반환
     } catch (error) {
         console.error("예매된 좌석 정보를 가져오는 중 오류 발생:", error);
         return [];
@@ -219,22 +229,32 @@ function setupConfirmButton() {
             return;
         }
 
+        // 세션 스토리지에서 Authorization 토큰 가져오기
+        const token = sessionStorage.getItem("Authorization");
+
+        if (!token) {
+            alert("로그인이 필요합니다.");
+            return;
+        }
+
         // 백엔드에 맞춰 데이터 구조 수정
         const scheduleTime = `${bookingInfo.date} ${bookingInfo.time}`;
 
         try {
-            // 각 좌석마다 별도의 예약 요청 대신 하나의 요청으로 수정
+            // 예약 정보 객체
             const reservation = {
                 movieTitle: bookingInfo.movieTitle,
                 theaterName: bookingInfo.theater,
                 scheduleTime: scheduleTime,
-                seatNumber: bookingInfo.seats[0] // 첫 번째 좌석만 예약 
+                seatNumber: bookingInfo.seats // 첫 번째 좌석만 예약
             };
 
+            // 서버에 예약 요청
             const response = await fetch(`${BACKEND_URL}/reservation`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": token
                 },
                 body: JSON.stringify(reservation),
                 credentials: "include" // 쿠키 포함하여 요청 (세션 기반 인증을 위해)
