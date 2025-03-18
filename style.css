@@ -94,15 +94,15 @@
 .seat {
   width: 30px;
   height: 30px;
-  margin: 6px;
-  border: 1px solid #ccc;
+  margin: 7px;
   display: flex; /* flex로 수정 */
   justify-content: center; /* 텍스트 중앙 정렬 */
   align-items: center; /* 텍스트 중앙 정렬 */
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 5px;
   background-color: #f8f9fa;
   transition: all 0.3s ease;
+  font-size: 0.8rem;
 }
 
 .seat:hover {
@@ -136,7 +136,7 @@
 .booking-step {
   padding: 20px;
   margin-bottom: 20px;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(0, 0, 0, 0.162);
   border-radius: 5px;
   transition: all 0.3s ease;
 }
@@ -152,41 +152,28 @@
 
 /* 시간 슬롯 */
 .time-slot {
-  padding: 10px 15px;
+  padding: 8px 15px;
   margin: 5px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #f8f9fa;
-  border: 1px solid #ddd;
-  display: inline-block;
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.time-slot:hover {
-  background-color: #e9ecef;
 }
 
 .time-slot.selected {
-  background-color: #009688;
+  background-color: #007bff;
+  border: 1px solid #007bff;;
   color: white;
 }
 
 /* 예매 컨테이너 */
 .booking-container {
   max-width: 1000px;
-  margin: 20px auto;
-  padding: 20px;
   color: white;
   border-radius: 10px;
 }
 
-/* 예매 요약 */
-.booking-summary {
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 20px;
-  border-radius: 5px;
-  margin-top: 30px;
-}
+
 
 /* 극장 버튼 */
 .theater-btn {
@@ -199,7 +186,7 @@
 
 /* 예매 확정 버튼 */
 #confirm-booking {
-  width: 100%;
+  width: 30%;
   padding: 12px;
   font-size: 1.1rem;
   transition: all 0.3s ease;

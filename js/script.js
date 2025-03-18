@@ -32,9 +32,9 @@ function displayMovies(movies) {
     movies.forEach((movie, index) => {
         const movieCard = document.createElement("div");
         movieCard.classList.add("card", "me-3","bg-purple");
-        movieCard.style.flex = "0 0 calc(25% - 10px)"; // flex: grow, shrink, basis 설정 (4개씩 배치, 간격 10px)
+        movieCard.style.flex = "0 0 calc(25% - 10px)";
         movieCard.style.minWidth = "calc(25% - 10px)";
-
+        
         movieCard.innerHTML = `
         <div class="movie-container">
             <span class="ranking-badge">${index + 1}</span>
@@ -48,21 +48,19 @@ function displayMovies(movies) {
             <p class="card-text text-white">좋아요: ${movie.vote_count}</p>
         </div>
         <div class="card-footer bg-dark">
-             <a href="booking.html?id=${movie.id}" class="btn btn-secondary">예매</a>
+            <a href="booking.html?id=${movie.id}" class="btn btn-secondary">예매</a>
         </div>`;
-
+        
         movieList.appendChild(movieCard);
-
-        // 카드 클릭 시 상세 페이지 이동
+        
+       
         movieCard.querySelector(".movie-container").addEventListener("click", () => {
             window.location.href = `movie_detail.html?id=${movie.id}`;
         });
-
-        //호버 효과
+        
         const overlay = movieCard.querySelector(".movie-overlay");
         movieCard.addEventListener("mouseenter", () => overlay.style.opacity = "1");
         movieCard.addEventListener("mouseleave", () => overlay.style.opacity = "0");
     });
 }
-
 fetchKoreanMovies();
