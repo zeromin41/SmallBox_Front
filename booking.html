@@ -19,16 +19,17 @@
   </head>
   <body class="bg-purple">
     <!-- 헤더 -->
-    <header class="bg-purple p-3">
-      <div class="container d-flex justify-content-between align-items-center">
-        <a href="index.html" class="text-white link-hover">SmallBox Cinema</a>
-        <div>
-          <a href="#" class="btn btn-link text-white">로그인</a>
-          <a href="#" class="btn btn-link text-white">회원가입</a>
-          <a href="#" class="btn btn-link text-white">마이페이지</a>
+    <header class="p-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a href="index.html" class="text-white link-hover">SmallBox Cinema</a>
+            <div id="header-buttons" class="hidden">
+                <a href="#" id="login-btn" class="btn btn-link text-white">로그인</a>
+                <a href="register.html" id="register-btn" class="btn btn-link text-white">회원가입</a>
+                <a href="#" id="mypage-btn" class="btn btn-link text-white">마이페이지</a>
+            </div>
         </div>
-      </div>
     </header>
+
 
     <!-- 메인 컨테이너 -->
     <div class="container mt-5 booking-container">
@@ -126,5 +127,6 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
     <!-- 예매 스크립트 -->
     <script src="js/booking.js"></script>
+    <script src="./js/common.js"></script>
   </body>
 </html>

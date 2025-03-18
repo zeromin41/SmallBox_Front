@@ -146,115 +146,130 @@ async function setupTimeSlots() {
     });
 }
 
-// 예매된 좌석 가져오기
-async function fetchSeats(theater, date, time) {
-    // 백엔드에서 이미 예매된 좌석 정보를 가져오는 로직
-    // 필요시 백엔드 API를 추가로 개발해야 함
-    try {
-        const scheduleTime = `${date} ${time}`;
-        const response = await fetch(`${BACKEND_URL}/bookedSeats?theaterName=${encodeURIComponent(theater)}&scheduleTime=${encodeURIComponent(scheduleTime)}`);
-        if (!response.ok) {
-            return []; // 오류 발생 시 빈 배열 반환
-        }
-        const bookedSeats = await response.json();
-        return bookedSeats; // 예매된 좌석 배열 반환
-    } catch (error) {
-        console.error("예매된 좌석 정보를 가져오는 중 오류 발생:", error);
-        return [];
-    }
+// 단일 좌석 예약 가능 여부 확인
+async function checkSeatAvailability(theater, scheduleTime, seatNumber) {
+  try {
+    const reservationData = {
+      movieTitle: bookingInfo.movieTitle,
+      theaterName: theater,
+      scheduleTime: scheduleTime,
+      seatNumber: seatNumber,
+    };
+
+    // 세션 스토리지에서 토큰 직접 가져오기
+    const token = sessionStorage.getItem('Authorization');
+    console.log("Token in checkSeatAvailability:", token);
+
+    const response = await fetch(`${BACKEND_URL}/reservation`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": token // 토큰 사용
+      },
+      body: JSON.stringify(reservationData),
+      credentials: "include"
+    });
+
+    const result = await response.json();
+    return result.msg !== '이선좌';
+
+  } catch (error) {
+    console.error('좌석 예약 가능 여부 확인 중 오류:', error);
+    return false;
+  }
 }
 
 // 좌석 생성
 async function generateSeats() {
-    const seatsContainer = document.getElementById('seats-container');
-    seatsContainer.innerHTML = '';
+  const seatsContainer = document.getElementById('seats-container');
+  seatsContainer.innerHTML = '';
+  bookingInfo.seats = [];
 
-    const bookedSeats = await fetchSeats(bookingInfo.theater, bookingInfo.date, bookingInfo.time);
+  const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  const cols = 10;
+  const scheduleTime = `${bookingInfo.date} ${bookingInfo.time}`;
 
-    const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-    const cols = 10;
+  for (let col = 1; col <= cols; col++) {
+    const colDiv = document.createElement('div');
+    colDiv.className = 'seat-col';
 
-    for (let col = 1; col <= cols; col++) { // 열을 기준으로 반복
-        const colDiv = document.createElement('div');
-        colDiv.className = 'seat-col';
+    for (let row of rows) {
+      const seatNumber = `${row}${col}`;
+      const seat = document.createElement('div');
+      seat.className = 'seat';
+      seat.textContent = seatNumber;
+      seat.dataset.seat = seatNumber;
 
-        rows.forEach(row => { // 행을 기준으로 반복
-            const seatNumber = `${row}${col}`; // 좌석 번호 생성
-            const seat = document.createElement('div');
-            seat.className = 'seat';
-            seat.textContent = seatNumber;
-            seat.dataset.seat = seatNumber;
+      const isAvailable = await checkSeatAvailability(bookingInfo.theater, scheduleTime, seatNumber);
 
-            if (bookedSeats.includes(seatNumber)) {
-                seat.classList.add('occupied');
-            } else {
-                seat.addEventListener('click', function () {
-                    this.classList.toggle('selected');
-                    updateSelectedSeats();
-                });
-            }
-
-            colDiv.appendChild(seat);
+      if (!isAvailable) {
+        seat.classList.add('occupied');
+      } else {
+        seat.addEventListener('click', function () {
+          this.classList.toggle('selected');
+          updateSelectedSeats();
         });
-
-        seatsContainer.appendChild(colDiv);
+      }
+      colDiv.appendChild(seat);
     }
-
-    document.getElementById('booking-summary').style.display = 'block';
+    seatsContainer.appendChild(colDiv);
+  }
+  document.getElementById('booking-summary').style.display = 'block';
 }
 
-// 선택한 좌석 업데이트
 function updateSelectedSeats() {
     const selectedSeats = document.querySelectorAll('.seat.selected');
     bookingInfo.seats = Array.from(selectedSeats).map(seat => seat.dataset.seat);
-
-    document.getElementById('summary-seats').textContent = bookingInfo.seats.join(', ') || '선택된 좌석 없음';
+    document.getElementById('summary-seats').textContent = bookingInfo.seats.length > 0
+        ? bookingInfo.seats.join(', ')
+        : '선택된 좌석 없음';
 }
 
-// 예매 확정 (백엔드에 예약 요청)
-function setupConfirmButton() {
-    document.getElementById('confirm-booking').addEventListener('click', async function () {
-        if (bookingInfo.seats.length === 0) {
-            alert('좌석을 선택해주세요.');
-            return;
-        }
+// 예매 확정 함수 (단일 좌석 예약으로 복원)
+async function setupConfirmButton() {
+  document.getElementById('confirm-booking').addEventListener('click', async function () {
+      if (bookingInfo.seats.length !== 1) { // 단일 좌석만 선택되었는지 확인
+          alert('좌석을 하나만 선택해주세요.');
+          return;
+      }
 
-        // 백엔드에 맞춰 데이터 구조 수정
-        const scheduleTime = `${bookingInfo.date} ${bookingInfo.time}`;
+      try {
+          const scheduleTime = `${bookingInfo.date} ${bookingInfo.time}`;
+          const reservationData = {
+              movieTitle: bookingInfo.movieTitle,
+              theaterName: bookingInfo.theater,
+              scheduleTime: scheduleTime,
+              seatNumber: bookingInfo.seats[0] // 단일 좌석 번호
+          };
 
-        try {
-            // 각 좌석마다 별도의 예약 요청 대신 하나의 요청으로 수정
-            const reservation = {
-                movieTitle: bookingInfo.movieTitle,
-                theaterName: bookingInfo.theater,
-                scheduleTime: scheduleTime,
-                seatNumber: bookingInfo.seats[0] // 첫 번째 좌석만 예약 
-            };
+           console.log("reservationData:", reservationData); // 요청 데이터 확인
 
-            const response = await fetch(`${BACKEND_URL}/reservation`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(reservation),
-                credentials: "include" // 쿠키 포함하여 요청 (세션 기반 인증을 위해)
-            });
+          const token = sessionStorage.getItem('Authorization');
 
-            const result = await response.json();
 
-            if (result.msg === "이선좌") {
-                alert("이미 예약된 좌석입니다.");
-            } else if (result.msg === "예매 성공") {
-                alert("예매가 완료되었습니다.");
-                window.location.href = "index.html";
-            } else {
-                alert(result.msg || "예매 중 오류가 발생했습니다.");
-            }
-        } catch (error) {
-            console.error("예매 요청 중 오류 발생:", error);
-            alert("예매 중 오류가 발생했습니다.");
-        }
-    });
+          const response = await fetch(`${BACKEND_URL}/reservation`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  "Authorization": token
+              },
+              body: JSON.stringify(reservationData),
+              credentials: "include"
+          });
+
+          const result = await response.json();
+
+          if (result.msg === '예매 성공') {
+              alert('예매가 완료되었습니다.');
+              window.location.href = 'index.html';
+          } else {
+              alert(`예매 실패: ${result.msg}`);
+          }
+      } catch (error) {
+          console.error('예매 요청 중 오류 발생:', error);
+          alert('예매 중 오류가 발생했습니다.');
+      }
+  });
 }
 
 // 페이지 로드 시 실행
