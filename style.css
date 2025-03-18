@@ -196,3 +196,8 @@
   transform: translateY(-2px);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
+
+/* 헤더 부분 로딩 */
+.hidden {
+  visibility: hidden; /* 처음에는 숨김 */
+}
