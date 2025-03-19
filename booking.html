@@ -16,7 +16,7 @@
     />
     <!-- 커스텀 CSS -->
     <link href="style.css" rel="stylesheet" />
-    <link href="login.css" rel="stylesheet"/>
+    <link href="login.css" rel="stylesheet" />
   </head>
   <body class="bg-purple">
     <!-- 헤더 -->
@@ -25,96 +25,121 @@
         <a href="index.html" class="text-white link-hover">SmallBox Cinema</a>
         <div id="header-buttons" class="hidden">
           <a href="#" id="login-btn" class="btn btn-link text-white">로그인</a>
-          <a href="register.html" id="register-btn" class="btn btn-link text-white">회원가입</a>
-          <a href="#" id="mypage-btn" class="btn btn-link text-white">마이페이지</a>
-      </div>
+          <a
+            href="register.html"
+            id="register-btn"
+            class="btn btn-link text-white"
+            >회원가입</a
+          >
+          <a href="#" id="mypage-btn" class="btn btn-link text-white"
+            >마이페이지</a
+          >
+        </div>
       </div>
     </header>
 
     <!-- 메인 컨테이너 -->
     <div class="container mt-5 booking-container">
-        <h1 class="text-center mb-4 fw-bold" id="movie-title"></h1>
-        <div id="movie-info" class="d-flex justify-content-evenly mt-5 mb-4">
-          <div id="movie-info-poster"></div>
-          <div id="movie-info-text" class="mt-5"></div>
-        </div>
+      <h1 class="text-center mb-4 fw-bold" id="movie-title"></h1>
+      <div id="movie-info" class="d-flex justify-content-evenly mt-5 mb-4">
+        <div id="movie-info-poster"></div>
+        <div id="movie-info-text" class="mt-5"></div>
+      </div>
     </div>
 
-      <!-- 예매 단계 -->
-      <div class="booking-steps p-4 rounded shadow-sm">
-        <!-- 극장 선택 -->
-        <div class="booking-step" id="step1">
-          <h4 class="text-white fw-bold">극장 선택</h4>
-          <div class="mt-3">
-            <button
-              type="button"
-              class="btn btn-outline-primary theater-btn me-3"
-              data-theater="유레카 스몰박스"
-            >
-              유레카 스몰박스
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-primary theater-btn me-3"
-              data-theater="수원 스몰박스"
-            >
-              수원 스몰박스
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-primary theater-btn me-3"
-              data-theater="천안 스몰박스"
-            >
-              천안 스몰박스
-            </button>
-          </div>
+    <!-- 예매 단계 -->
+    <div class="booking-steps p-4 rounded shadow-sm">
+      <!-- 극장 선택 -->
+      <div class="booking-step bg-pink" id="step1">
+        <h4 class="text-white fw-bold">극장 선택</h4>
+        <div class="mt-4">
+          <button
+            type="button"
+            class="btn btn-light theater-btn me-3"
+            data-theater="유레카 스몰박스"
+          >
+            유레카 스몰박스
+          </button>
+          <button
+            type="button"
+            class="btn btn-light theater-btn me-3"
+            data-theater="수원 스몰박스"
+          >
+            수원 스몰박스
+          </button>
+          <button
+            type="button"
+            class="btn btn-light theater-btn me-3"
+            data-theater="천안 스몰박스"
+          >
+            천안 스몰박스
+          </button>
         </div>
+      </div>
 
-        <!-- 날짜 선택 -->
-        <div class="booking-step mt-4" id="step2" style="display: none">
-            <h4 class="text-white fw-bold">날짜 선택</h4>
-          <div id="calendar" class="calendar-container"></div>
+      <!-- 날짜 선택 -->
+      <div class="booking-step mt-4" id="step2" style="display: none">
+        <h4 class="text-white fw-bold">날짜 선택</h4>
+        <div id="calendar" class="calendar-container mt-4"></div>
+      </div>
+
+      <!-- 시간 선택 -->
+      <div class="booking-step mt-4" id="step3" style="display: none">
+        <h4 class="text-white fw-bold">시간 선택</h4>
+
+        <div id="time-slots" class="d-flex flex-wrap justify-content-center">
+          <!-- JS에서 채워짐 -->
         </div>
+      </div>
 
-        <!-- 시간 선택 -->
-        <div class="booking-step mt-4" id="step3" style="display: none">
-            <h4 class="text-white fw-bold">시간 선택</h4>
-          
-          <div id="time-slots" class="d-flex flex-wrap justify-content-center">
-            <!-- JS에서 채워짐 -->
-          </div>
-        </div>
-
-        <!-- 좌석 선택 -->
-        <div class="booking-step mt-4" id="step4" style="display: none">
-            <h4 class="text-white fw-bold">좌석 선택</h4>
-          <div class="theater-area text-center">
-            <div class="screen bg-secondary text-white py-2">스크린</div>
-            <div
+      <!-- 좌석 선택 -->
+      <div class="booking-step mt-4" id="step4" style="display: none">
+        <h4 class="text-white fw-bold">좌석 선택</h4>
+        <div class="theater-area text-center">
+          <div class="screen bg-secondary text-white py-2">스크린</div>
+          <div
             id="seats-container"
             class="d-flex flex-wrap justify-content-center mt-3"
           >
-              <!-- 좌석이 여기에 표시됨 -->
-            </div>
-            <div class="mt-3">
-              <span class="badge bg-light text-dark me-2">선택 가능</span>
-              <span class="badge bg-success me-2">선택됨</span>
-              <span class="badge bg-danger">이미 예매됨</span>
-            </div>
+            <!-- 좌석이 여기에 표시됨 -->
+          </div>
+          <div class="mt-3">
+            <span class="badge bg-light text-dark me-2">선택 가능</span>
+            <span class="badge bg-success me-2">선택됨</span>
+            <span class="badge bg-danger">이미 예매됨</span>
           </div>
         </div>
+      </div>
 
-        <!-- 예매 정보 요약 -->
-        <div class="booking-step mt-4" id="booking-summary" style="display: none">
-       
+      <!-- 예매 정보 요약 -->
+      <div class="booking-step mt-4" id="booking-summary" style="display: none">
         <h4 class="text-white fw-bold mb-3">예매 정보</h4>
-          <p class="text-white"><strong>영화:</strong> <span id="summary-movie" class="text-white"></span></p>
-          <p class="text-white"><strong>극장:</strong> <span id="summary-theater" class="text-white"></span></p>
-          <p class="text-white"><strong>날짜:</strong> <span id="summary-date" class="text-white"></span></p>
-          <p class="text-white"><strong>시간:</strong> <span id="summary-time" class="text-white"></span></p>
-          <p class="text-white"><strong>좌석:</strong> <span id="summary-seats" class="text-white"></span></p>
+        <div class="">
+          <p class="text-white">
+            <strong>영화:</strong>
+            <span id="summary-movie" class="text-white"></span>
+          </p>
+          <p class="text-white">
+            <strong>극장:</strong>
+            <span id="summary-theater" class="text-white"></span>
+          </p>
+          <p class="text-white">
+            <strong>날짜:</strong>
+            <span id="summary-date" class="text-white"></span>
+          </p>
+          <p class="text-white">
+            <strong>시간:</strong>
+            <span id="summary-time" class="text-white"></span>
+          </p>
+          <p class="text-white">
+            <strong>좌석:</strong>
+            <span id="summary-seats" class="text-white"></span>
+          </p>
           <!-- <p><strong>가격:</strong> <span id="summary-price"></span></p> -->
-          <button class="btn btn-success w-100 mt-3" id="confirm-booking">
+          <button
+            class="btn btn-success mt-3 justify-content-center"
+            id="confirm-booking"
+          >
             예매하기
           </button>
         </div>
@@ -123,8 +148,6 @@
 
     <!-- 로그인 모달 -->
     <div id="login-container"></div>
-    
-
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Bootstrap JS -->
