@@ -3,6 +3,9 @@
   background-color: rgb(53, 2, 53) !important;
 }
 
+.bg-pinkpurple{
+  background-color: #D8BFD8 !important;
+}
 /* 링크호버설정 */
 .link-hover {
   text-decoration: none; /*밑줄제거거*/
