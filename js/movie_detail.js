@@ -1,6 +1,4 @@
-const API_KEY = "a7ff72154d9967465a1fe5f7274997c4";
-const BASE_URL = "https://api.themoviedb.org/3";
-const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+import { API_KEY, BASE_URL, IMAGE_BASE_URL } from './config.js';
 
 const movieDetailContainer = document.getElementById("movie-detail");
 
@@ -33,7 +31,7 @@ async function fetchMovieDetail() {
 function displayMovieDetail(movie) {
     movieDetailContainer.innerHTML = `
         <div class="d-flex justify-content-center align-items-center" 
-             style="max-width: 1000px; gap: 30px; margin: auto; padding: 20px; background-color: rgb(53, 2, 53);">
+             style="border-radius: 15px; max-width: 1000px; gap: 30px; margin: auto; padding: 20px; background-color: #a893a8;">
             
             <!-- 영화 포스터 -->
             <img src="${IMAGE_BASE_URL}${movie.poster_path}" alt="${movie.title}" 
@@ -45,7 +43,7 @@ function displayMovieDetail(movie) {
                 <p><strong>개봉일:</strong> ${movie.release_date}</p>
                 <p><strong>평점:</strong> ${movie.vote_average} / 10</p>
                 <p><strong>줄거리:</strong> ${movie.overview}</p>
-                <button id="booking-btn" class="btn btn-secondary">예매</button>
+                <button id="booking-btn" class="btn btn-pink text-white" >예매</button>
             </div>
         </div>
     `;

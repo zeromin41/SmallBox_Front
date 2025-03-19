@@ -1,6 +1,5 @@
 const BACKEND_URL = "http://localhost:8080";
-const API_KEY = "a7ff72154d9967465a1fe5f7274997c4"; // moviedetail.js에서 가져옴
-const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500"; // moviedetail.js에서 가져옴
+import { API_KEY, BASE_URL, IMAGE_BASE_URL } from './config.js';
 
 async function fetchReservations() {
   const token = sessionStorage.getItem("Authorization");
@@ -105,6 +104,7 @@ function displayReservations(reservations) {
       const cancelBtn = document.createElement("button");
       cancelBtn.textContent = "예약 취소";
       cancelBtn.classList.add("cancel-btn");
+      cancelBtn.classList.add("btn", "btn-pink", "cancel-btn");
       cancelBtn.onclick = () => showCancelConfirmation(reservation.reservationId);
       
       // 버튼 컨테이너 (오른쪽 하단 정렬)
@@ -139,12 +139,12 @@ function displayReservations(reservations) {
     
     const confirmBtn = document.createElement("button");
     confirmBtn.textContent = "확인";
-    confirmBtn.classList.add("confirm-btn");
+    confirmBtn.classList.add("btn", "btn-pink", "confirm-btn");
     confirmBtn.onclick = () => cancelReservation(reservationId, modal);
     
     const cancelBtn = document.createElement("button");
     cancelBtn.textContent = "취소";
-    cancelBtn.classList.add("cancel-btn");
+    cancelBtn.classList.add("btn", "btn-secondary", "cancel-btn");
     cancelBtn.onclick = () => document.body.removeChild(modal);
     
     btnContainer.appendChild(confirmBtn);

@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
           mypageBtn.href = "#";
   
           if (!document.getElementById("logout-btn")) {
-              mypageBtn.insertAdjacentHTML("afterend", '<a href="#" id="logout-btn" class="btn btn-link text-white">로그아웃</a>');
+              mypageBtn.insertAdjacentHTML("afterend", '<a href="#" id="logout-btn" class="btn btn-link text-white" style="text-decoration: none; font-weight: normal; font-size: 20px;">로그아웃</a>');
               document.getElementById("logout-btn").addEventListener("click", handleLogout);
           }
       }

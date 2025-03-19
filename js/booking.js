@@ -1,6 +1,4 @@
-const API_KEY = "a7ff72154d9967465a1fe5f7274997c4";
-const BASE_URL = "https://api.themoviedb.org/3";
-const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+import { API_KEY, BASE_URL, IMAGE_BASE_URL } from './config.js';
 const BACKEND_URL = "http://localhost:8080"; // 백엔드 서버 주소
 
 // 현재 예매 정보를 저장할 객체
@@ -20,10 +18,18 @@ function formatDate(dateStr) {
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 }
 
-// 자동 스크롤 기능
+// 스크롤 함수 수정
 function scrollToSection(sectionId) {
-    document.getElementById(sectionId).scrollIntoView({ behavior: "smooth", block: "start" });
-}
+    const section = document.getElementById(sectionId);
+    const offset = 50; // 상단에서 50px 떨어진 위치로 스크롤
+    const sectionPosition = section.getBoundingClientRect().top;
+    const offsetPosition = sectionPosition + window.pageYOffset - offset;
+    
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth"
+    });
+  }
 
 // URL에서 movieId 가져오기
 function getMovieIdFromUrl() {
@@ -34,53 +40,61 @@ function getMovieIdFromUrl() {
 // 영화 정보 가져오기
 async function fetchMovieDetail(movieId) {
     if (!movieId) {
-        document.getElementById("movie-title").textContent = "영화 정보를 찾을 수 없습니다.";
-        return;
+      document.getElementById("movie-title").textContent = "영화 정보를 찾을 수 없습니다.";
+      return;
     }
-
+  
     try {
-        const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=ko-KR`);
-        const movie = await response.json();
-
-        bookingInfo.movieId = movieId;
-        bookingInfo.movieTitle = movie.title;
-        bookingInfo.moviePoster = movie.poster_path;
-
-        document.getElementById("movie-title").textContent = `${movie.title} 예매`;
-        document.getElementById("movie-info-poster").innerHTML = `
+      const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=ko-KR`);
+      const movie = await response.json();
+  
+      // 예매 정보 업데이트
+      bookingInfo.movieId = movieId;
+      bookingInfo.movieTitle = movie.title;
+      bookingInfo.moviePoster = movie.poster_path;
+  
+      document.getElementById("movie-title").textContent = `${movie.title} 예매`;
+      document.getElementById("movie-info-poster").innerHTML = `
         <img src="${IMAGE_BASE_URL}${movie.poster_path}" alt="${movie.title}" class="img-fluid rounded" style="width: 200px;">
       `;
     
+      // 추가 영화 정보 표시
       document.getElementById("movie-info-text").innerHTML = `
         <div>
           <p class="card-text">개봉일: ${movie.release_date}</p>
           <p class="card-text">평점: ${movie.vote_average} / 10</p>
+          <p class="card-text">상영시간: ${movie.runtime}분</p>
+          <p class="card-text">장르: ${movie.genres.map(genre => genre.name).join(', ')}</p>
+          <p class="card-text">제작국가: ${movie.production_countries.map(country => country.name).join(', ')}</p>
         </div>
       `;
-
+  
       document.getElementById("summary-movie").textContent = movie.title;
-
+  
     } catch (error) {
-        console.error("영화 정보를 가져오는 중 오류 발생:", error);
+      console.error("영화 정보를 가져오는 중 오류 발생:", error);
     }
-}
+  }
 
-// 극장 선택 이벤트
+// 극장 선택 이벤트 함수 수정
 function setupTheaterButtons() {
     document.querySelectorAll('.theater-btn').forEach(button => {
-        button.addEventListener('click', async function() {
-            document.querySelectorAll('.theater-btn').forEach(btn => btn.classList.remove('btn-light'));
-            this.classList.add('btn-light');
-            
-            bookingInfo.theater = this.dataset.theater;
-            document.getElementById("summary-theater").textContent = bookingInfo.theater;
-            
-            document.getElementById('step2').style.display = 'block';
-            scrollToSection('step2');
-            initCalendar();
+      button.addEventListener('click', async function() {
+        document.querySelectorAll('.theater-btn').forEach(btn => {
+          btn.classList.remove('active');
+          btn.classList.remove('btn-light');
         });
+        this.classList.add('active');
+        
+        bookingInfo.theater = this.dataset.theater;
+        document.getElementById("summary-theater").textContent = bookingInfo.theater;
+        
+        document.getElementById('step2').style.display = 'block';
+        scrollToSection('step2');
+        initCalendar();
+      });
     });
-}
+  }
 
 // FullCalendar 초기화
 function initCalendar() {
@@ -131,34 +145,34 @@ async function fetchTimeSlots(theater, date) {
     return ["10:30", "13:00", "15:30", "18:00", "20:30", "23:00"];
 }
 
-// 상영 시간 선택
+// 상영 시간 선택 함수 수정
 async function setupTimeSlots() {
     const timeSlotContainer = document.getElementById('time-slots');
     timeSlotContainer.innerHTML = '';
-
+  
     const timeSlots = await fetchTimeSlots(bookingInfo.theater, bookingInfo.date);
-
+  
     timeSlots.forEach(time => {
-        const slot = document.createElement('button');
-        slot.className = 'time-slot';
-        slot.textContent = time;
-        slot.dataset.time = time;
-
-        slot.addEventListener('click', function() {
-            document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
-            this.classList.add('selected');
-
-            bookingInfo.time = this.dataset.time;
-            document.getElementById("summary-time").textContent = bookingInfo.time;
-
-            document.getElementById('step4').style.display = 'block';
-            scrollToSection('step4');
-            generateSeats();
-        });
-
-        timeSlotContainer.appendChild(slot);
+      const slot = document.createElement('button');
+      slot.className = 'time-slot';  // CSS 클래스명만 지정, selected는 클릭 시 추가
+      slot.textContent = time;
+      slot.dataset.time = time;
+  
+      slot.addEventListener('click', function() {
+        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+        this.classList.add('selected');
+  
+        bookingInfo.time = this.dataset.time;
+        document.getElementById("summary-time").textContent = bookingInfo.time;
+  
+        document.getElementById('step4').style.display = 'block';
+        scrollToSection('step4');
+        generateSeats();
+      });
+  
+      timeSlotContainer.appendChild(slot);
     });
-}
+  }
 
 // 예매된 좌석 가져오기 : Post로 바꿨슴당
 async function fetchSeats(theater, date, time) {
