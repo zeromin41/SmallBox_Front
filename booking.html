@@ -24,14 +24,14 @@
       <div class="container d-flex justify-content-between align-items-center">
         <a href="index.html" class="text-white link-hover">SmallBox Cinema</a>
         <div id="header-buttons" class="hidden">
-          <a href="#" id="login-btn" class="btn btn-link text-white">로그인</a>
+          <a href="#" id="login-btn" class="btn btn-link text-white" style="font-weight: normal; font-size: 20px; text-decoration: none;">로그인</a>
           <a
             href="register.html"
             id="register-btn"
-            class="btn btn-link text-white"
+            class="btn btn-link text-white" style="font-weight: normal; font-size: 20px; text-decoration: none;"
             >회원가입</a
           >
-          <a href="#" id="mypage-btn" class="btn btn-link text-white"
+          <a href="#" id="mypage-btn" class="btn btn-link text-white" style="font-weight: normal; font-size: 20px; text-decoration: none;"
             >마이페이지</a
           >
         </div>
@@ -55,21 +55,21 @@
         <div class="mt-4">
           <button
             type="button"
-            class="btn btn-light theater-btn me-3"
+            class="btn btn-pink theater-btn me-3"
             data-theater="유레카 스몰박스"
           >
             유레카 스몰박스
           </button>
           <button
             type="button"
-            class="btn btn-light theater-btn me-3"
+            class="btn btn-pink theater-btn me-3"
             data-theater="수원 스몰박스"
           >
             수원 스몰박스
           </button>
           <button
             type="button"
-            class="btn btn-light theater-btn me-3"
+            class="btn btn-pink theater-btn me-3"
             data-theater="천안 스몰박스"
           >
             천안 스몰박스
@@ -84,13 +84,12 @@
       </div>
 
       <!-- 시간 선택 -->
-      <div class="booking-step mt-4" id="step3" style="display: none">
-        <h4 class="text-white fw-bold">시간 선택</h4>
-
-        <div id="time-slots" class="d-flex flex-wrap justify-content-center">
-          <!-- JS에서 채워짐 -->
-        </div>
-      </div>
+<div class="booking-step mt-4" id="step3" style="display: none">
+  <h4 class="text-white fw-bold">시간 선택</h4>
+  <div id="time-slots" class="d-flex flex-wrap justify-content-center mt-3">
+    <!-- JS에서 채워짐 -->
+  </div>
+</div>
 
       <!-- 좌석 선택 -->
       <div class="booking-step mt-4" id="step4" style="display: none">
@@ -137,7 +136,7 @@
           </p>
           <!-- <p><strong>가격:</strong> <span id="summary-price"></span></p> -->
           <button
-            class="btn btn-success mt-3 justify-content-center"
+            class="btn btn-pink mt-3 justify-content-center"
             id="confirm-booking"
           >
             예매하기
@@ -155,7 +154,8 @@
     <!-- FullCalendar JS -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
     <!-- 예매 스크립트 -->
-    <script src="js/booking.js"></script>
+    <script src="./js/config.js"></script>  
+    <script type="module" src="./js/booking.js"></script>
     <script src="./js/common.js"></script>
     <script src="./js/script.js"></script>
     <script src="./js/login.js"></script>

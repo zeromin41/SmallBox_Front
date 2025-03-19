@@ -12,7 +12,7 @@
   color: white;
   padding: 15px;
   border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-top: 50px;
 }
 
@@ -30,15 +30,6 @@
   gap: 15px;
 }
 
-.reservation-info p {
-  margin: 0;
-  font-size: 17px;
-}
-
-.reservation-info strong {
-  color: #ff0000;
-}
-
 
 
 .btn-container {
@@ -50,18 +41,14 @@
   right: 2rem;
 }
 
-.cancel-btn {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+.btn-pink {
+  background-color: #ccb5cc !important;
+  color: white !important;
+  border: none !important;
 }
 
-.cancel-btn:hover,
-.confirm-btn:hover {
-  background-color: #c0392b;
+.btn-pink:hover {
+  background-color: #b997b9 !important;
 }
 
 .cancel-modal {
@@ -90,22 +77,4 @@
   justify-content: center;
   gap: 1rem;
   margin-top: 1rem;
-}
-
-.confirm-btn {
-  background-color: #7f8c8d;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-}
-
-.cancel-btn {
-  background-color: #7f8c8d;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
 }

@@ -7,10 +7,48 @@
   background-color: #ccb5cc !important;
 }
 
+.btn-pink {
+  background-color: #ccb5cc !important;
+  color: white !important;
+  border: none !important;
+}
+
+.btn-pink:hover {
+  background-color: #b997b9 !important;
+}
+
+/* 스크롤바 숨기기 */
+#movie-list {
+  scrollbar-width: none;     /* Firefox */
+}
+
+/* 스크롤 버튼 스타일 개선 */
+#scroll-left, #scroll-right {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin: 0 10px;
+  z-index: 100;
+}
+
+#scroll-left i, #scroll-right i {
+  font-size: 24px;
+}
+
+#scroll-left:hover, #scroll-right:hover {
+  opacity: 1;
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+}
 
 /* 링크호버설정 */
 .link-hover {
-  text-decoration: none; /*밑줄제거거*/
+  text-decoration: none; /*밑줄제거*/
   transition: opacity 0.3s ease;
   font-size: 1.5rem;
   font-weight: bold;
@@ -94,6 +132,7 @@
   object-fit: contain; /* 이미지가 배너를 초과하지 않도록 설정 */
 }
 
+
 /* 좌석 */
 .seat {
   width: 30px;
@@ -137,11 +176,13 @@
 }
 
 /* 예매 단계 */
-.booking-step {
+.booking-step, 
+.reservation-card {
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 10px;
   transition: all 0.3s ease;
+  background-color: #ae9bae !important;
 }
 
 /* 캘린더 */
@@ -160,28 +201,38 @@
   color: white;
 }
 
-
-
-/* 극장 버튼 */
-.theater-btn {
+/* 버튼 디자인 일관성 */
+.time-slot, .theater-btn, #confirm-booking {
+  background-color: #b997b9; /* 진한 채도 낮은 핑크 */
+  color: white;
+  border: none;
   transition: all 0.3s ease;
+  margin: 5px;
+  padding: 10px 15px;
+  border-radius: 5px;
 }
 
-.theater-btn:hover {
+.time-slot:hover, .theater-btn:hover, #confirm-booking:hover {
+  background-color: #a582a5;
   transform: translateY(-2px);
 }
 
-/* 예매 확정 버튼 */
+.time-slot.selected, .theater-btn.active {
+  background-color: #8c6d8c;
+}
+
+/* 예매 정보 중앙 정렬 */
+#booking-summary div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
 #confirm-booking {
-  width: 30%;
-  padding: 12px;
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-}
-
-#confirm-booking:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* 헤더 부분 로딩 해결 */

@@ -1,6 +1,4 @@
-const API_KEY = "a7ff72154d9967465a1fe5f7274997c4";
-const BASE_URL = "https://api.themoviedb.org/3";
-const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+import { API_KEY, BASE_URL, IMAGE_BASE_URL } from './config.js';
 
 const movieList = document.getElementById("movie-list");
 const banners = ["./img/banner1.jpg", "./img/banner2.jpg", "./img/banner3.jpg"];
@@ -26,6 +24,22 @@ async function fetchKoreanMovies() {
     }
 }
 
+// 스크롤 버튼 기능 추가
+document.addEventListener('DOMContentLoaded', function() {
+    const scrollLeftBtn = document.getElementById('scroll-left');
+    const scrollRightBtn = document.getElementById('scroll-right');
+    
+    if(scrollLeftBtn && scrollRightBtn && movieList) {
+        scrollLeftBtn.addEventListener('click', () => {
+            movieList.scrollBy({ left: -300, behavior: 'smooth' });
+        });
+        
+        scrollRightBtn.addEventListener('click', () => {
+            movieList.scrollBy({ left: 300, behavior: 'smooth' });
+        });
+    }
+});
+
 // 영화 카드 UI 렌더링
 function displayMovies(movies) {
     movieList.innerHTML = ""; // 기존 목록 초기화
@@ -36,20 +50,22 @@ function displayMovies(movies) {
         movieCard.style.minWidth = "calc(25% - 10px)";
         
         movieCard.innerHTML = `
-        <div class="movie-container">
-            <span class="ranking-badge">${index + 1}</span>
-            <img src="${IMAGE_BASE_URL}${movie.poster_path}" class="card-img-top movie-img" alt="${movie.title}">
-            <div class="movie-overlay">
-                <p class="movie-overview">${movie.overview}</p>
-            </div>
+    <div class="movie-container">
+        <span class="ranking-badge">${index + 1}</span>
+        <img src="${IMAGE_BASE_URL}${movie.poster_path}" class="card-img-top movie-img" alt="${movie.title}">
+        <div class="movie-overlay">
+            <p class="movie-overview">${movie.overview}</p>
         </div>
-        <div class="card-body bg-dark">
-            <h5 class="card-title text-white">${movie.title}</h5>
-            <p class="card-text text-white">좋아요: ${movie.vote_count}</p>
-        </div>
-        <div class="card-footer bg-dark">
-        <a href="booking.html?id=${movie.id}" class="btn btn-secondary booking-btn">예매</a>
-        </div>`;
+    </div>
+    <div class="card-body" style="background-color:#a893a8; padding-bottom: 0;">
+        <h5 class="card-title text-white">${movie.title}</h5>
+        <p class="card-text text-white">좋아요: ${movie.vote_count}</p>
+    </div>
+    <div class="card-footer text-end" style="background-color:#a893a8; border-top: none; padding-top: 0;">
+        <a href="booking.html?id=${movie.id}" class="btn btn-pink text-white float-end" style="background-color: pink;">예매</a>
+    </div>
+`;
+
         
         movieList.appendChild(movieCard);
         
