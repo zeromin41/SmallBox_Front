@@ -237,7 +237,6 @@ function setupConfirmButton() {
             return;
         }
 
-        // 백엔드에 맞춰 데이터 구조 수정
         const scheduleTime = `${bookingInfo.date} ${bookingInfo.time}`;
 
         try {
@@ -246,7 +245,7 @@ function setupConfirmButton() {
                 movieTitle: bookingInfo.movieTitle,
                 theaterName: bookingInfo.theater,
                 scheduleTime: scheduleTime,
-                seatNumber: bookingInfo.seats // 첫 번째 좌석만 예약
+                seatNumbers: bookingInfo.seats // 좌석 여러개 배열로 전달
             };
 
             // 서버에 예약 요청
@@ -257,13 +256,13 @@ function setupConfirmButton() {
                     "Authorization": token
                 },
                 body: JSON.stringify(reservation),
-                credentials: "include" // 쿠키 포함하여 요청 (세션 기반 인증을 위해)
+                credentials: "include"
             });
 
             const result = await response.json();
 
             if (result.msg === "이선좌") {
-                alert("이미 예약된 좌석입니다.");
+                alert("이미 예약된 좌석입니다."); // 사실 빨간 색으로 나타나서 할 필요 없음
             } else if (result.msg === "예매 성공") {
                 alert("예매가 완료되었습니다.");
                 window.location.href = "index.html";
