@@ -45,10 +45,15 @@ function displayMovieDetail(movie) {
                 <p><strong>개봉일:</strong> ${movie.release_date}</p>
                 <p><strong>평점:</strong> ${movie.vote_average} / 10</p>
                 <p><strong>줄거리:</strong> ${movie.overview}</p>
-                <a href="booking.html?id=${movie.id}" class="btn btn-secondary">예매</a>
+                <button id="booking-btn" class="btn btn-secondary">예매</button>
             </div>
         </div>
     `;
+
+    // 예매 버튼 클릭 시 로그인 및 세션 확인 후 이동
+    document.getElementById("booking-btn").addEventListener("click", (event) => {
+        checkLoginBeforeRedirect(event, `booking.html?id=${movie.id}`);
+    });
 }
 
 // 상세 정보 가져오기 실행

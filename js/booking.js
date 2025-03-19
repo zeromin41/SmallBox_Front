@@ -243,14 +243,14 @@ function setupConfirmButton() {
             return;
         }
 
-        // 세션 스토리지에서 Authorization 토큰 가져오기
-        const token = sessionStorage.getItem("Authorization");
-
-        if (!token) {
-            alert("로그인이 필요합니다.");
+        // 세션 유효성 검사
+        const isSessionValid = await checkSession();
+        if (!isSessionValid) {
             return;
         }
 
+        // 세션 스토리지에서 Authorization 토큰 가져오기
+        const token = sessionStorage.getItem("Authorization");
         const scheduleTime = `${bookingInfo.date} ${bookingInfo.time}`;
 
         try {
