@@ -1,11 +1,13 @@
 /* 공용 배경색 스타일 */
 .bg-purple {
-  background-color: rgb(53, 2, 53) !important;
+  background-color: #d7bed7 !important;
 }
 
-.bg-pinkpurple{
-  background-color: #D8BFD8 !important;
+.bg-pink {
+  background-color: #ccb5cc !important;
 }
+
+
 /* 링크호버설정 */
 .link-hover {
   text-decoration: none; /*밑줄제거거*/
@@ -44,9 +46,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   text-align: center;
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: 0.3s;
   padding: 10px;
   font-size: 14px;
   overflow: hidden;
@@ -61,9 +65,6 @@
   white-space: normal; /* 텍스트가 자동으로 줄바꿈되도록 설정 */
 }
 
-.movie-container:hover .movie-overlay {
-  opacity: 1;
-}
 
 /* 배너를 감싸는 컨테이너 스타일 */
 .banner-container {
@@ -125,7 +126,7 @@
 
 /* 스크린 */
 .screen {
-  background-color: #e0e0e0;
+  background-color: #0c0303;  /*왜안돼*/
   border-radius: 5px;
   text-align: center;
   margin-bottom: 30px;
@@ -139,8 +140,7 @@
 .booking-step {
   padding: 20px;
   margin-bottom: 20px;
-  background-color: rgba(0, 0, 0, 0.162);
-  border-radius: 5px;
+  border-radius: 10px;
   transition: all 0.3s ease;
 }
 
@@ -153,27 +153,11 @@
   border-radius: 5px;
 }
 
-/* 시간 슬롯 */
-.time-slot {
-  padding: 8px 15px;
-  margin: 5px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.time-slot.selected {
-  background-color: #007bff;
-  border: 1px solid #007bff;;
-  color: white;
-}
 
 /* 예매 컨테이너 */
 .booking-container {
-  max-width: 1000px;
+  max-width: 1200px;
   color: white;
-  border-radius: 10px;
 }
 
 
