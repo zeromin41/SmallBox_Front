@@ -91,10 +91,24 @@ function initCalendar() {
         initialView: 'dayGridWeek',
         selectable: true,
         locale: 'ko',
+        themeSystem: 'bootstrap', // 부트스트랩 테마 사용
         headerToolbar: {
-            left: 'prev,next',
-            center: 'title',
-            right: 'dayGridWeek'
+            left: 'customPrev',
+            right: 'customNext'
+        },
+        customButtons: {
+            customPrev: {
+                text: '◀',  // 왼쪽 아이콘
+                click: function() {
+                    calendar.prev();
+                }
+            },
+            customNext: {
+                text: '▶',  // 오른쪽 아이콘
+                click: function() {
+                    calendar.next();
+                }
+            }
         },
         validRange: {
             start: new Date()
@@ -245,7 +259,8 @@ function setupConfirmButton() {
                 movieTitle: bookingInfo.movieTitle,
                 theaterName: bookingInfo.theater,
                 scheduleTime: scheduleTime,
-                seatNumbers: bookingInfo.seats // 좌석 여러개 배열로 전달
+                seatNumbers: bookingInfo.seats, // 좌석 여러개 배열로 전달
+                movieId: bookingInfo.movieId // movieId 추가
             };
 
             // 서버에 예약 요청
