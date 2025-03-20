@@ -26,19 +26,23 @@ document.addEventListener("DOMContentLoaded", function () {
         pwd: password,
       });
 
+      const message = response.data.msg;
+
       if (message.includes("축하")) {
         alert("회원가입이 완료되었습니다.");
         window.location.href = "index.html"; // 회원가입 성공 시 로그인 페이지로 이동
-      } else if (message.includes("이미 가입된 이메일")) {
-        alert("이미 존재하는 이메일입니다. 로그인을 진행해 주세요.");
-        document.getElementById("email-error").textContent =
-          "이미 가입된 이메일입니다.";
-      } else {
-        alert("회원가입 중 오류가 발생했습니다.");
       }
     } catch (error) {
-      alert("회원가입 요청 실패 : 회원가입 중 오류가 발생했습니다.");
-      // console.error("회원가입 오류:", error);
+      const statusCode = error.response?.status; 
+      const message = error.response?.data?.msg || "회원가입 중 오류가 발생했습니다.";
+
+      if (statusCode === 409) { // 이메일 중복 오류 (409 Conflict)
+        document.getElementById("email-error").textContent = "이미 가입된 이메일입니다.";
+      } else if (statusCode === 400) { // 잘못된 이메일 형식, 비밀번호 오류
+        alert(message);
+      } else { // 500 에러 포함 기타 모든 오류
+        alert(message);
+      }
     }
   });
 });
