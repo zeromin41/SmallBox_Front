@@ -16,8 +16,9 @@
 .modal-content {
   background: white;
   padding: 20px;
+  padding-bottom: 30px;
   border-radius: 10px;
-  width: 350px;
+  width: 450px;
   position: relative;
   display: flex; /* 모달을 보이도록 설정 */
   flex-direction: column;
@@ -29,4 +30,26 @@
   cursor: pointer;
   font-size: 20px;
   float: right;
+  padding-bottom: 30px;
+}
+.form-label {
+  font-size: 14px;
+  font-weight: normal;
+}
+form-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-submit {
+  background-color: pink;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.btn-submit:hover {
+  background-color: rgb(255, 182, 193);
 }
