@@ -50,33 +50,43 @@ function displayMovies(movies) {
         movieCard.style.minWidth = "calc(25% - 10px)";
         
         movieCard.innerHTML = `
-    <div class="movie-container">
-        <span class="ranking-badge">${index + 1}</span>
-        <img src="${IMAGE_BASE_URL}${movie.poster_path}" class="card-img-top movie-img" alt="${movie.title}">
-        <div class="movie-overlay">
-            <p class="movie-overview">${movie.overview}</p>
-        </div>
-    </div>
-    <div class="card-body" style="background-color:#a893a8; padding-bottom: 0;">
-        <h5 class="card-title text-white">${movie.title}</h5>
-        <p class="card-text text-white">좋아요: ${movie.vote_count}</p>
-    </div>
-    <div class="card-footer text-end" style="background-color:#a893a8; border-top: none; padding-top: 0;">
-        <a href="booking.html?id=${movie.id}" class="btn btn-pink text-white float-end" style="background-color: pink;">예매</a>
-    </div>
-`;
+            <div class="movie-container">
+                <span class="ranking-badge">${index + 1}</span>
+                <img src="${IMAGE_BASE_URL}${movie.poster_path}" class="card-img-top movie-img" alt="${movie.title}">
+                <div class="movie-overlay">
+                    <p class="movie-overview">${movie.overview}</p>
+                </div>
+            </div>
+            <div class="card-body" style="background-color:#a893a8; padding-bottom: 0;">
+                <h5 class="card-title text-white">${movie.title}</h5>
+                <p class="card-text text-white">좋아요: ${movie.vote_count}</p>
+            </div>
+            <div class="card-footer text-end" style="background-color:#a893a8; border-top: none; padding-top: 0;">
+                <button class="btn btn-pink text-white float-end movie-booking-btn" style="background-color: pink;">예매</button>
+            </div>
+        `;
 
-        
         movieList.appendChild(movieCard);
-        
-       
-        movieCard.querySelector(".movie-container").addEventListener("click", () => {
-            window.location.href = `movie_detail.html?id=${movie.id}`;
-        });
-        
+
+        const bookingBtn = movieCard.querySelector(".movie-booking-btn");
+        if (bookingBtn) {
+            bookingBtn.addEventListener("click", async function (event) {
+                event.preventDefault();
+                await checkLoginBeforeRedirect(event, `booking.html?id=${movie.id}`);
+            });
+        }
+
+        const movieContainer = movieCard.querySelector(".movie-container");
+        if (movieContainer) {
+            movieContainer.addEventListener("click", () => {
+                window.location.href = `movie_detail.html?id=${movie.id}`;
+            });
+        }
+
         const overlay = movieCard.querySelector(".movie-overlay");
         movieCard.addEventListener("mouseenter", () => overlay.style.opacity = "1");
         movieCard.addEventListener("mouseleave", () => overlay.style.opacity = "0");
     });
 }
+
 fetchKoreanMovies();
