@@ -17,9 +17,43 @@
   background-color: #b997b9 !important;
 }
 
+header {
+  position: fixed;
+  background-color: #644373;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* 다른 요소 위에 표시되도록 설정 */
+}
+body {
+  padding-top: 60px; /* 헤더 높이만큼 패딩 추가 (헤더가 콘텐츠를 가리지 않도록) */
+}
+
+/* 메인페이지 무비 */
+.movie-container img {
+  width: 100%; /* 카드 너비에 맞춤 */
+  height: 50vh;
+}
+
+.like-count {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  opacity: 0; /* 기본적으로 숨김 */
+  transition: opacity 0.3s ease;
+}
+
+.movie-container:hover .like-count {
+  opacity: 1; /* 호버 시 표시 */
+}
+
 /* 스크롤바 숨기기 */
 #movie-list {
-  scrollbar-width: none;     /* Firefox */
+  scrollbar-width: none;     
 }
 
 /* 스크롤 버튼 스타일 개선 */
