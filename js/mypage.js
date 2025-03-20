@@ -168,7 +168,7 @@ function showCancelConfirmation(reservationId) {
 
   const cancelBtn = document.createElement("button");
   cancelBtn.textContent = "취소";
-  cancelBtn.classList.add("btn", "btn-secondary", "cancel-btn");
+  cancelBtn.classList.add("btn", "btn-secondary", "modal-cancel-btn");
   cancelBtn.onclick = () => document.body.removeChild(modal);
 
   btnContainer.appendChild(confirmBtn);
