@@ -4,51 +4,23 @@
   margin-top: 50px;
 }
 
-.reservation-card {
-  display: flex;
-  align-items: center; /* 이미지와 텍스트 수직 정렬 */
-  position: relative;
-  background-color: rgb(76, 209, 64);
-  color: white;
-  padding: 15px;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin-top: 50px;
-}
 
-.reservation-poster {
-  width: 20%;
-  height: 20%;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-right: 20px; /* 이미지와 텍스트 사이 간격 */
-}
-
-.reservation-info {
-  display: flex;
-  flex-direction: column; /* 영화 정보는 세로 정렬 */
-  gap: 15px;
-}
-
-
-
-.btn-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+.cancel-btn {
   position: absolute;
-  bottom: 2rem;
-  right: 2rem;
+  right: 190px;
+  top: 190px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #b582b5;
+  transition: all 0.3s ease;
+  background: none;
+  border: none;
 }
 
-.btn-pink {
-  background-color: #ccb5cc !important;
-  color: white !important;
-  border: none !important;
-}
-
-.btn-pink:hover {
-  background-color: #b997b9 !important;
+.cancel-btn:hover {
+  color: #8a4f8a;
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 .cancel-modal {

@@ -210,8 +210,7 @@ body {
 }
 
 /* 예매 단계 */
-.booking-step, 
-.reservation-card {
+.booking-step {
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 10px;
